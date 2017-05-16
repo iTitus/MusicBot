@@ -27,13 +27,13 @@ if '%errorlevel%' NEQ '0' (
 
 CD /d "%~dp0"
 
-IF EXIST %SYSTEMROOT%\py.exe (
-    CMD /k %SYSTEMROOT%\py.exe -m pip install --upgrade -r requirements.txt
-    EXIT
-)
+REM IF EXIST %SYSTEMROOT%\py.exe (
+REM     CMD /k %SYSTEMROOT%\py.exe -m pip install --upgrade -r requirements.txt
+REM     EXIT
+REM )
 
-python --version > NUL 2>&1
-IF %ERRORLEVEL% NEQ 0 GOTO nopython
+REM python --version > NUL 2>&1
+REM IF %ERRORLEVEL% NEQ 0 GOTO nopython
 
 CMD /k python -m pip install --upgrade -r requirements.txt
 GOTO end
