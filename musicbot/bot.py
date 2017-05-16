@@ -1811,6 +1811,41 @@ class MusicBot(discord.Client):
         await self.safe_send_message(channel, ":wave:")
         await self.disconnect_all_voice_clients()
         raise exceptions.TerminateSignal
+        
+    async def cmd_standard(self, message, player, channel, author, permissions):
+        """
+        Usage:
+            {command_prefix}standard
+
+        Clears the queue and plays the standard YT-playlist.
+        """
+        
+        song_url = 'https://www.youtube.com/playlist?list=PLllsBOLpoaXNbSX-1LwJxKSg-Y67KIpbw'
+        
+        response = await self.cmd_clear(player, author)
+        if response and isinstance(response, Response):
+            content = response.content
+            if response.reply:
+                content = '%s, %s' % (message.author.mention, content)
+
+            sentmsg = await self.safe_send_message(
+                message.channel, content,
+                expire_in=response.delete_after if self.config.delete_messages else 0,
+                also_delete=message if self.config.delete_invoking else None
+            )
+        
+        response = await self.cmd_play(player, channel, author, permissions, None, song_url)
+        if response and isinstance(response, Response):
+            content = response.content
+            if response.reply:
+                content = '%s, %s' % (message.author.mention, content)
+
+            sentmsg = await self.safe_send_message(
+                message.channel, content,
+                expire_in=response.delete_after if self.config.delete_messages else 0,
+                also_delete=message if self.config.delete_invoking else None
+            )
+        return await self.cmd_shuffle(channel, player)
 
     async def on_message(self, message):
         await self.wait_until_ready()
