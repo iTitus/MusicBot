@@ -234,7 +234,7 @@ class MusicBot(discord.Client):
 
             await self.ws.voice_state(server.id, channel.id)
 
-            s_id_data = await asyncio.wait_for(s_id, timeout=10, loop=self.loop)
+            s_id_data = await asyncio.wait_for(s_id, timeout=30, loop=self.loop)
             voice_data = await asyncio.wait_for(_voice_data, timeout=10, loop=self.loop)
             session_id = s_id_data.get('session_id')
 
